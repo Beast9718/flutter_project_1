@@ -16,30 +16,36 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-  colors: [
-    Color.fromARGB(165, 230, 154, 202),
-    Color.fromARGB(171, 255, 221, 225),
-  ],
-  begin: Alignment.topLeft,
-  end: Alignment.bottomRight,
-),
+            colors: [
+              Color.fromARGB(118, 235, 93, 183),
+              Color.fromARGB(171, 255, 221, 225),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 20),
                 Header(),
                 SizedBox(height: 20),
                 Search(),
                 SizedBox(height: 20),
+                Welcome(),
+                SizedBox(height: 20),
+                Category(),
               ],
             ),
           ),
@@ -51,7 +57,7 @@ class HomePage extends StatelessWidget {
 
 Widget Header() {
   return Padding(
-    padding: const EdgeInsets.all(20.0),
+    padding: const EdgeInsets.symmetric(horizontal: 20.0),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -150,6 +156,61 @@ Widget Search() {
           ),
         ),
       ),
+    ),
+  );
+}
+
+Widget Welcome() {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+    child: Text(
+      'Welcome to 2026\nFashion Style',
+      style: TextStyle(fontSize: 35, fontWeight: FontWeight.w800),
+    ),
+  );
+}
+
+Widget Category() {
+  final categories = [
+    {'name': 'shirts', 'image': 'assets/images/shirts.webp'},
+    {'name': 'shoes', 'image': 'assets/images/shoes.webp'},
+    {'name': 'jeans', 'image': 'assets/images/jeans.webp'},
+    {'name': 'bags', 'image': 'assets/images/bags.webp'},
+    {'name': 'suit salwar', 'image': 'assets/images/suit_salwar.webp'},
+    {'name': 'lehenga', 'image': 'assets/images/lehenga.webp'},
+    
+  ];
+  
+  return SizedBox(
+    height: 100,
+    child: ListView.builder(
+      itemCount: categories.length,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(193, 255, 255, 255),
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.pink, width: 2),
+                ),
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundImage: AssetImage(categories[index]['image']!),
+                ),
+              ),
+              Text(
+                categories[index]['name']!,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        );
+      },
     ),
   );
 }
