@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/HomePage.dart';
 import 'package:project1/ProductPage.dart';
-import 'package:project1/signup_page.dart';
+import 'package:project1/signin_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: SignupPage());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: SigninPage());
   }
 }
 
