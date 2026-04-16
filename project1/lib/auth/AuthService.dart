@@ -20,7 +20,8 @@ class Authservice {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         final AccessToken = data['access_token'];
-        if (AccessToken != null) {
+        final bool is_verified=data['user']['is_verified'] ?? false;
+        if (is_verified) {
           await storage.write(key: 'jwt_token', value: AccessToken);
           return true;
         }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:project1/HomePage.dart';
 import 'package:project1/auth/AuthService.dart';
+import 'package:project1/signup_page.dart';
 
 class SigninPage extends StatefulWidget {
   const SigninPage({super.key});
@@ -248,6 +249,13 @@ Widget Signin() {
           icon: Icon(Icons.login),
         ),
       ),
+      Center(
+          child: TextButton(
+            onPressed: (){Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const SignupPage()));
+      },
+            child: const Text("don't have a account? create one"),
+          ),
+        ),
     ],
   );
 }
