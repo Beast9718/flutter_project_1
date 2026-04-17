@@ -67,4 +67,22 @@ class Authservice {
       return false;
     }
   }
+
+  Future<bool> requestPasswordReset(String email)async{
+    final url=Uri.parse('$baseUrl/auth/password-reset-request');
+    try{
+      final response=await http.post(url,
+      headers: {'Content-Type': 'application/json'},body: jsonEncode({'email':email}));
+      if(response.statusCode==200 || response.statusCode==201){
+          return true;
+      }else{
+        print('password reset resquest failed:${response.body}');
+        return false;
+      }
+    }
+    catch(e){
+      print('errror occured during password reset request:$e');
+      return false;
+    }
+  }
 }

@@ -27,6 +27,95 @@ class _SigninPageState extends State<SigninPage> {
     super.dispose();
   }
 
+  Future<void> _showForgotPasswordDialog() async {
+  final TextEditingController resetEmailController = TextEditingController();
+  bool isResetting = false;
+
+  showDialog(
+    context: context,
+    builder: (context) {
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            title: const Text("Reset Password"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text("Enter your email address to receive a password reset link."),
+                const SizedBox(height: 15),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color.fromARGB(255, 240, 240, 240),
+                  ),
+                  child: TextField(
+                    controller: resetEmailController,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Email Address',
+                      contentPadding: EdgeInsets.all(12),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Cancel", style: TextStyle(color: Colors.grey)),
+              ),
+              isResetting
+                  ? const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    )
+                  : ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.pinkAccent,
+                        foregroundColor: Colors.white,
+                      ),
+                      onPressed: () async {
+                        final email = resetEmailController.text.trim();
+                        if (email.isEmpty) return;
+
+                        setState(() {
+                          isResetting = true;
+                        });
+
+                        bool success = await _authservice.requestPasswordReset(email);
+
+                        setState(() {
+                          isResetting = false;
+                        });
+
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(success 
+                                ? 'Reset link sent! Check your email.' 
+                                : 'Failed to send request. Check email or try again.'),
+                            ),
+                          );
+                        }
+                      },
+                      child: const Text("Send Link"),
+                    ),
+            ],
+          );
+        },
+      );
+    },
+  );
+}
+
   Future<void> _handleLogin() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
@@ -238,6 +327,19 @@ Widget Signin() {
               style: TextStyle(color: const Color.fromARGB(255, 93, 93, 93)),
             ),
             contentPadding: EdgeInsets.all(8),
+          ),
+        ),
+      ),
+      Align(
+        alignment: Alignment.centerRight,
+        child: TextButton(
+          onPressed: _showForgotPasswordDialog,
+          child: const Text(
+            'Forgot Password?',
+            style: TextStyle(
+              color: Color.fromARGB(255, 94, 104, 109),
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
       ),
