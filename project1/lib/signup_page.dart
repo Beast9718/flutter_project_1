@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:project1/HomePage.dart';
 import 'package:project1/auth/AuthService.dart';
 import 'package:project1/signin_page.dart';
@@ -82,10 +83,7 @@ class _SignupPageState extends State<SignupPage> {
                 // Pop the dialog first
                 Navigator.of(context).pop();
                 // Then navigate to SigninPage
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SigninPage()),
-                );
+                context.go('/signin');
               },
               child: const Text(
                 "Back to Login",
@@ -209,7 +207,7 @@ class _SignupPageState extends State<SignupPage> {
         ),
         Center(
           child: TextButton(
-            onPressed: (){Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const SigninPage()));
+            onPressed: (){context.go('/signin');
       },
             child: const Text('Already have an account? Login'),
           ),

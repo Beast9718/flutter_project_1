@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:project1/HomePage.dart';
 import 'package:project1/auth/AuthService.dart';
 import 'package:project1/signup_page.dart';
@@ -138,7 +139,7 @@ class _SigninPageState extends State<SigninPage> {
 
     if(success){
       if(mounted){
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const HomePage()));
+        context.go('/home');
       }
     }
     else{if(mounted){
@@ -353,7 +354,7 @@ Widget Signin() {
       ),
       Center(
           child: TextButton(
-            onPressed: (){Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const SignupPage()));
+            onPressed: (){context.go('/signup');
       },
             child: const Text("don't have a account? create one"),
           ),
