@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:project1/HomePage.dart';
 import 'package:project1/ProductPage.dart';
+import 'package:project1/ResetPasswordPage.dart';
 import 'package:project1/signin_page.dart';
 import 'package:project1/signup_page.dart';
 
@@ -13,6 +14,10 @@ final GoRouter _router=GoRouter(initialLocation:'/signup',routes: [
   GoRoute(path: '/signin',builder: (context, state) => const SigninPage(),),
   GoRoute(path: '/home',builder: (context, state) => const HomePage(),),
   GoRoute(path: '/products',builder: (context, state) => const ProductPage(),),
+  GoRoute(path: '/api/v1/auth/password-reset-confirm/:token',builder: (context, state) {
+    final String token=state.pathParameters['token']??'';
+    return ResetPasswordPage(token: token);
+  }),
 ]);
 
 class MyApp extends StatelessWidget {

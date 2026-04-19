@@ -85,4 +85,27 @@ class Authservice {
       return false;
     }
   }
+  Future<bool>confirmPasswordReset(String token ,String newPassword, String confirmNewPassword) async{
+    final url=Uri.parse('$baseUrl/auth/password-reset-confirm/$token');
+    try{final response=await http.post(url,
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({
+  "new_password": newPassword,
+  "confirm_new_password": confirmNewPassword
+}
+    ),
+    );
+    if(response.statusCode==200 || response.statusCode==201){
+        return true;
+    }
+    else{
+      print('password reset failed:${response.body}');
+      return false;
+    }
+    }catch(e){
+      print('error occured during password reset:$e');
+      return false;
+    }
+
+  }
 }
